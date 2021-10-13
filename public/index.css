@@ -1,0 +1,99 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+#divBody {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: 100vh;
+}
+
+#divDirs {
+    flex: 1;
+    padding: 3px;
+    overflow: scroll;
+}
+
+.divDirsItem {
+    display: inline-block;
+    padding: 9px;
+    margin: 1px;
+    border-radius: 2px;
+}
+
+.divDirsItemBody {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    width: 84px;
+}
+
+.divDirsItemSelected {
+    background-color: rgba(108, 0, 255, 0.3);
+}
+
+.divDirsItemSpan {
+    text-align: center;
+    word-wrap: break-word;
+}
+
+#divActs {
+    padding: 3px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-top: 1px solid #ddd;
+}
+
+#divActs button {
+    flex: 0;
+    margin: 1px;
+    padding: 3px;
+}
+
+#divActs input {
+    flex: 1;
+    margin: 1px;
+    padding: 3px;
+    min-width: 50px;
+}
+
+#divCmds {
+    flex: 0;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #ddd;
+}
+
+#divCmdRun {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#divCmdRun select {
+    flex: 1;
+    margin: 3px;
+    padding: 3px;
+    min-width: 120px;
+}
+
+#divCmdRun input {
+    flex: 2;
+    margin: 3px;
+    padding: 3px;
+    min-width: 180px;
+}
+
+#divCmdBar {
+    display: flex;
+}
+
+#divCmdBar select {
+    flex: 1;
+    margin: 3px;
+    padding: 3px;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "droprun",
+  "version": "0.1.0",
+  "description": "Explorer of QinpelSrv files and drop then as parameters in executions of QinpelSrv commands.",
+  "main": "main.js",
+  "types": "./types",
+  "scripts": {
+    "test": "bash -v test.sh"
+  },
+  "keywords": [],
+  "author": "Éverton M. Vieira",
+  "license": "LGPL-3.0-only",
+  "devDependencies": {
+    "qinpel-app": "file:../qinpel-app"
+  }
+}
