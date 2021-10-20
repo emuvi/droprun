@@ -12,31 +12,6 @@
 
 #divDirs {
     flex: 1;
-    padding: 3px;
-    overflow: scroll;
-}
-
-.divDirsItem {
-    display: inline-block;
-    padding: 9px;
-    margin: 1px;
-    border-radius: 2px;
-}
-
-.divDirsItemBody {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    width: 84px;
-}
-
-.divDirsItemSelected {
-    background-color: rgba(108, 0, 255, 0.3);
-}
-
-.divDirsItemSpan {
-    text-align: center;
-    word-wrap: break-word;
 }
 
 #divActs {
