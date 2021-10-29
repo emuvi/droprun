@@ -2,14 +2,14 @@ import { Qinpel } from "qinpel-app/types/qinpel"
 // @ts-ignore
 const qinpel = window.frameElement.qinpel as Qinpel;
 
-import { Explorer } from "qinpel-cps/all"
+import { QinExplorer } from "qinpel-cps"
 
 class DropRun {
     private divDirs: HTMLDivElement;
     private divActs: HTMLDivElement;
     private divCmds: HTMLDivElement;
 
-    private explorer: Explorer;
+    private explorer: QinExplorer;
 
     private buttonUp: HTMLButtonElement;
     private buttonUpImg: HTMLImageElement;
