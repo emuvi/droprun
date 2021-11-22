@@ -1,7 +1,7 @@
 bash -v build.sh
-browserify src/index.js --debug -o public/index.js
-rm -rf ../qinpel-dsk/run/app/droprun
-mkdir ../qinpel-dsk/run/app/droprun
+browserify build/index.js --debug -o public/index.js
+rm -rf ../qinpel-dsk/run/app/droprun-qap
+mkdir ../qinpel-dsk/run/app/droprun-qap
 cd public
-cp -r * ../../qinpel-dsk/run/app/droprun/
+cp -r * ../../qinpel-dsk/run/app/droprun-qap/
 cd ..

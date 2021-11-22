@@ -1,9 +1,9 @@
 {
-  "name": "droprun",
+  "name": "droprun-qap",
   "version": "0.1.0",
-  "description": "Explorer of Qinpel files for drop then as parameters in executions of Qinpel commands.",
-  "main": "main.js",
-  "types": "./types",
+  "description": "Explorer for Qinpel platform files that can drop then as parameters in executions of commands.",
+  "main": "./build/main.js",
+  "types": "./types/main.d.ts",
   "scripts": {
     "start": "bash -v test.sh"
   },
@@ -11,9 +11,7 @@
   "author": "Éverton M. Vieira",
   "license": "LGPL-3.0-only",
   "dependencies": {
-    "qinpel-cps": "file:../qinpel-cps"
-  },
-  "devDependencies": {
-    "qinpel-app": "file:../qinpel-app"
+    "qinpel-cps": "file:../qinpel-cps",
+    "qinpel-res": "file:../qinpel-res"
   }
 }
