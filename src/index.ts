@@ -1,30 +1,42 @@
 import { QinAsset, QinButton, QinColumn, QinCombo, QinExplorer, QinIcon, QinLine, QinString } from "qinpel-cps"
-import { QinSoul } from "qinpel-res";
+import { QinEvent, QinSoul } from "qinpel-res";
 
 class DropRun extends QinColumn {
 
     private qinExplorer = new QinExplorer();
-    
+
     private qinMiddle = new QinLine();
     private qinUp = new QinButton(new QinIcon(QinAsset.FaceArrowUp));
     private qinFolder = new QinString(".");
     private qinDrop = new QinButton(new QinIcon(QinAsset.FaceArrowDown));
-    
+
     private qinBottom = new QinLine();
     private qinCommands = new QinCombo();
     private qinParameters = new QinString();
-    private qinExecute = new QinButton(new QinIcon(QinAsset.FaceCog));
+    private qinWildcard = new QinButton(new QinIcon(QinAsset.FaceCog));
 
     public constructor() {
         super();
         this.qinExplorer.install(this);
         this.qinExplorer.putAsFlexMax();
-        
+
         this.qinMiddle.install(this);
         this.qinUp.install(this.qinMiddle);
+        this.qinUp.addAction(qinEvent => {
+            if (qinEvent.isPrimary()) {
+                this.qinExplorer.goFolderUp(folder => {
+                    this.qinFolder.setData(folder);
+                });
+            }
+        });
         this.qinFolder.install(this.qinMiddle);
         this.qinFolder.putAsFlexMax();
         this.qinDrop.install(this.qinMiddle);
+        this.qinDrop.addAction(qinEvent => {
+            if (qinEvent.isPrimary()) {
+                this.dropSelectedAndRun();
+            }
+        });
         this.qinFolder.addAction(qinEvent => {
             if (qinEvent.isEnter) {
                 this.loadExplorer();
@@ -35,8 +47,13 @@ class DropRun extends QinColumn {
         this.qinCommands.install(this.qinBottom);
         this.qinParameters.install(this.qinBottom);
         this.qinParameters.putAsFlexMax();
-        this.qinExecute.install(this.qinBottom);
-        
+        this.qinWildcard.install(this.qinBottom);
+        this.qinWildcard.addAction(qinEvent => {
+            if (qinEvent.isPrimary()) {
+                this.qinParameters.insertAtCursor("$selected$");
+            }
+        });
+
         this.loadCmds();
     }
 
@@ -59,6 +76,30 @@ class DropRun extends QinColumn {
                 this.qinFolder.setData(serverFolder);
             });
     }
+
+    public dropSelectedAndRun() {
+        let command = this.qinCommands.getData();
+        let parameters = QinSoul.body.parseParameters(this.qinParameters.getData());
+        let selected = this.qinExplorer.getData();
+        for (const item of selected) {
+            let item_params = [];
+            for (const param of parameters) {
+                item_params.push(param.replace("$selected$", item));
+            }
+            this.qinpel().post("/run/cmd/" + command, {
+                params: item_params,
+                inputs: []
+            })
+                .then(res => {
+                    // TODO
+                })
+                .catch(err => {
+                    // TODO
+                });
+        }
+    }
+
+
 }
 
 const mainApp = new DropRun();
