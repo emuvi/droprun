@@ -4,9 +4,6 @@
   "description": "DropRun is an application that explores the Qinpel platform files server and you can drop then as parameters in executions of commands.",
   "main": "./build/main.js",
   "types": "./types/main.d.ts",
-  "scripts": {
-    "start": "bash -v test.sh"
-  },
   "keywords": [],
   "author": "Éverton M. Vieira",
   "license": "LGPL-3.0-only",
