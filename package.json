@@ -1,7 +1,7 @@
 {
   "name": "droprun",
   "version": "0.1.0",
-  "description": "DropRun is an application that explores the Qinpel platform files server and you can drop then as parameters in executions of commands.",
+  "description": "DropRun is a Qinpel user application that explores the file system on the server and provides the ability to drop the files as parameters in command dispatches.",
   "main": "./build/main.js",
   "types": "./types/main.d.ts",
   "keywords": [],
