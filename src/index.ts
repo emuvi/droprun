@@ -25,9 +25,9 @@ class DropRun extends QinColumn {
     items: [this._qinCommands, this._qinParameters, this._qinWildcard],
   });
 
-  private _qinTokens = new QinCombo();
+  private _qinIssued = new QinCombo();
   private _qinAsk = new QinButton({ icon: new QinIcon(QinAsset.FaceEye) });
-  private _qinRunning = new QinLine({ items: [this._qinTokens, this._qinAsk] });
+  private _qinRunning = new QinLine({ items: [this._qinIssued, this._qinAsk] });
 
   public constructor() {
     super();
@@ -39,7 +39,8 @@ class DropRun extends QinColumn {
 
   private initRunning() {
     this._qinRunning.install(this);
-    this._qinTokens.style.putAsFlexMax();
+    this._qinIssued.style.putAsFlexMax();
+    this._qinAsk.addActionMain((_) => this.askRunning());
   }
 
   private initExplorer() {
@@ -88,13 +89,7 @@ class DropRun extends QinColumn {
       });
   }
 
-  public loadExplorer() {
-    this._qinExplorer.load(this._qinFolder.value, (serverFolder) => {
-      this._qinFolder.value = serverFolder;
-    });
-  }
-
-  public dropSelectedAndRun() {
+  private dropSelectedAndRun() {
     const exec = this._qinCommands.value;
     const parameters = QinBody.parseParameters(this._qinParameters.value);
     console.log("parameters", parameters);
@@ -110,12 +105,38 @@ class DropRun extends QinColumn {
       this.qinpel.talk
         .post("/cmd/run", { exec, args })
         .then((res) => {
-          this._qinTokens.addItem({ value: res.data, title: display, selected: true });
+          this._qinIssued.addItem({ value: res.data, title: display, selected: true });
         })
         .catch((err) => {
           this.qinpel.jobbed.statusError(err, "{droprun}(ErrCode-000001)");
         });
     }
+  }
+
+  private askRunning() {
+    let token = this._qinIssued.value;
+    let question = {
+      token,
+      askCreatedAt: true,
+      askResultLines: true,
+      askResultCoded: true,
+      askIsDone: true,
+      askFinishedAt: true,
+    };
+    this.qinpel.talk
+      .post("/issued", question)
+      .then((res) => {
+        this.qinpel.jobbed.statusInfo(res.data, "Running");
+      })
+      .catch((err) => {
+        this.qinpel.jobbed.statusError(err, "{droprun}(ErrCode-000002)");
+      });
+  }
+
+  public loadExplorer() {
+    this._qinExplorer.load(this._qinFolder.value, (serverFolder) => {
+      this._qinFolder.value = serverFolder;
+    });
   }
 }
 
