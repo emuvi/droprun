@@ -8,7 +8,7 @@ import {
   QinLine,
   QinString,
 } from "qinpel-cps";
-import { QinSoul } from "qinpel-res";
+import { QinBody, QinSoul } from "qinpel-res";
 
 class DropRun extends QinColumn {
   private _qinExplorer = new QinFileView();
@@ -95,22 +95,22 @@ class DropRun extends QinColumn {
   }
 
   public dropSelectedAndRun() {
-    let command = this._qinCommands.value;
-    let parameters = QinSoul.body.parseParameters(this._qinParameters.value);
-    let selected = this._qinExplorer.value;
-    for (const item of selected) {
-      let item_params = [];
-      for (const param of parameters) {
-        item_params.push(param.replace("%FILE%", item));
+    const exec = this._qinCommands.value;
+    const parameters = QinBody.parseParameters(this._qinParameters.value);
+    console.log("parameters", parameters);
+    const all_selected = this._qinExplorer.value;
+    for (const selected of all_selected) {
+      let display = exec;
+      let args = [];
+      for (let parameter of parameters) {
+        let prepared = parameter.replace(/%FILE%/g, selected);
+        display += ' "' + prepared + '"';
+        args.push(prepared);
       }
       this.qinpel.talk
-        .post("/cmd/run", {
-          exec: command,
-          args: item_params,
-          inputs: [],
-        })
+        .post("/cmd/run", { exec, args })
         .then((res) => {
-          this._qinTokens.addSame(res.data);
+          this._qinTokens.addItem({ value: res.data, title: display, selected: true });
         })
         .catch((err) => {
           this.qinpel.jobbed.statusError(err, "{droprun}(ErrCode-000001)");
